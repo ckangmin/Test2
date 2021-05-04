@@ -1,0 +1,62 @@
+create table userinfo(
+  mno int not null,
+  mid varchar(50),
+  pwd varchar(50),
+  name varchar(50),
+  pcode varchar(5),
+  addr1 varchar(100),
+  addr2 varchar (100),
+  hp1 varchar(3),
+  hp2 varchar(4),
+  hp3 varchar(4),
+  regdate timestamp default now(),
+  primary key(mno)
+);
+create table orderinfo(
+ ono int not null,
+ mno int not null,
+ pname varchar(150),
+ cnt int ,
+ result int ,
+ ship byte(1),
+ orderdate date,
+ pimg file,
+ primary key(ono)
+);
+create table cart(
+idx int not null,
+pname varchar(150),
+cnt int,
+result int,
+primary key(idx)
+);
+create table board(
+bno int,
+btype int,
+title varchar(150),
+mid varchar(150),
+content varchar(3000),
+writedate date,
+bimg file,
+primary key(bno)
+);
+create table prod(
+pno int,
+pname varchar(150),
+price int ,
+pcnt int ,
+pimg file,
+primary key(pno) 
+);
+create table like(
+idx int,
+pname varchar(150),
+mno int,
+primary key(idx)
+);
+alter table orderinfo add constraint fk_board foreign key (mno) references userinfo(mno);
+alter table orderinfo add constraint fk_board foreign key (pname) references prod(pname);
+alter table board add constraint fk_board foreign key (mid) references userinfo(mid);
+alter table cart add constraint fk_board foreign key (pname) references prod(pname);
+alter table like add constraint fk_board foreign key (pname) references prod(pname);
+alter table like add constraint fk_board foreign key (mno) references userinfo(mno);
